@@ -26,25 +26,37 @@
 #### 1. Добавить запись в таблицу `Product`
 
 ```sql
--- todo;
+INSERT INTO product VALUES (10, 1, 'fish', TRUE, 5, '2019-06-26 13:15:20');
 ```
 
 #### 2. Добавить запись в таблицу `ProductStatus`
 
 ```sql
--- todo;
+INSERT INTO productstatus VALUES ('confirmed');
 ```
 
 #### 3. Добавить 4 записи в таблицу `ProductStatus`
 
 ```sql
--- todo;
+INSERT INTO productstatus VALUES 
+    ('confirmed'), 
+    ('placed'), 
+    ('delivered'), 
+    ('paid') 
+;
 ```
 
 #### 4. Добавить 500 записей в таблицу `Product` (название, текст не важен)
 
 ```sql
--- todo;
+DO $$
+declare status_id integer :=1;
+BEGIN
+	WHILE status_id > 0 AND status_id < 501 LOOP
+		INSERT INTO product values ('gg', status_id, 'Dima', True, 10, current_timestamp);
+		status_id = status_id + 1;
+	END LOOP;
+END $$;
 ```
 
 #### 5. Обновить название одной из записей в таблице `ProductStatus`
