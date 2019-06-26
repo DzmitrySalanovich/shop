@@ -38,11 +38,11 @@ INSERT INTO productstatus VALUES ('confirmed');
 #### 3. Добавить 4 записи в таблицу `ProductStatus`
 
 ```sql
-INSERT INTO productstatus VALUES 
-    ('confirmed'), 
-    ('placed'), 
-    ('delivered'), 
-    ('paid') 
+INSERT INTO productstatus VALUES
+    ('confirmed'),
+    ('placed'),
+    ('delivered'),
+    ('paid')
 ;
 ```
 
@@ -122,13 +122,13 @@ WHERE tax = true
 -- todo;
 ```
 
-#### 14. Вывести количество записей в таблице `Product` для каждой записи в таблице `ProductStatus`. Отсортировать записи по имени статуса в порядке возрастания и по `price` в порядке убывания
+#### 14. Вывести количество записей в таблице `Product` для каждой записи в таблице `ProductStatus`. Отсортировать записи по имени статуса в порядке возрастания
 
 ```sql
 -- todo;
 ```
 
-#### 15. Вывести количество записей в таблице `Product`, у которых IsPublished верно, для каждой записи в таблице `ProductStatus`
+#### 15. Вывести количество записей в таблице `Product`, у которых `taxable = true`, для каждой записи в таблице `ProductStatus`
 
 ```sql
 -- todo;
