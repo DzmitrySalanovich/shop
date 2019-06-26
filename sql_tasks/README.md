@@ -62,19 +62,25 @@ END $$;
 #### 5. Обновить название одной из записей в таблице `ProductStatus`
 
 ```sql
--- todo;
+UPDATE productstatus
+SET name = 'available'
+WHERE
+	name = 'paid'
 ```
 
 #### 6. Обновить значение `taxable` в первых 10 записях таблицы `Product`
 
 ```sql
--- todo;
+UPDATE product
+SET tax = false
+WHERE status_id < 11
 ```
 
 #### 7. Удалить запись из таблицы `Product`
 
 ```sql
--- todo;
+DELETE FROM product
+WHERE status_id = 1;
 ```
 
 #### 8. Удалить 100 последних записей из таблицы `Product`
@@ -86,13 +92,16 @@ END $$;
 #### 9. Удалить 1 запись из таблицы `ProductStatus`
 
 ```sql
--- todo;
+DELETE FROM productstatus
+WHERE name = 'available';
 ```
 
 #### 10. Выбрать все записи из таблицы `Product`, у которых `taxable` верно
 
 ```sql
--- todo;
+SELECT tax
+FROM product
+WHERE tax = true
 ```
 
 #### 11. Выбрать все записи из таблицы `Product` с включением имени соответствующего статуса
