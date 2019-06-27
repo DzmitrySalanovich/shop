@@ -18,7 +18,20 @@
 | name | str |
 
 ```sql
--- Create tables;
+CREATE TABLE productstatus (
+	id serial primary key,
+	name varchar(10)
+);
+
+CREATE TABLE product (
+	id serial primary key,
+	sku varchar(10),
+	status_id integer references productstatus(id),
+	name varchar(10),
+	tax BOOLEAN,
+	price integer,
+	created_at timestamp
+);
 ```
 
 ## Queries
@@ -26,23 +39,32 @@
 #### 1. Добавить запись в таблицу `Product`
 
 ```sql
-INSERT INTO product VALUES (10, 1, 'fish', TRUE, 5, '2019-06-26 13:15:20');
+INSERT INTO product(sku, status_id, name, tax, price, created_at) 
+VALUES (10, 1, 'fish', TRUE, 5, '2019-06-26 13:15:20');
 ```
 
 #### 2. Добавить запись в таблицу `ProductStatus`
 
 ```sql
-INSERT INTO productstatus VALUES ('confirmed');
+INSERT INTO productstatus(name) VALUES ('confirmed');
 ```
 
 #### 3. Добавить 4 записи в таблицу `ProductStatus`
 
 ```sql
+<<<<<<< HEAD
+INSERT INTO productstatus(name) VALUES 
+    ('confirmed'), 
+    ('placed'), 
+    ('delivered'), 
+    ('paid') 
+=======
 INSERT INTO productstatus VALUES
     ('confirmed'),
     ('placed'),
     ('delivered'),
     ('paid')
+>>>>>>> 95bff3eee637199e6460bb6ebd95f4812c75a908
 ;
 ```
 
@@ -50,11 +72,12 @@ INSERT INTO productstatus VALUES
 
 ```sql
 DO $$
-declare status_id integer :=1;
+declare id integer :=2;
 BEGIN
-	WHILE status_id > 0 AND status_id < 501 LOOP
-		INSERT INTO product values ('gg', status_id, 'Dima', True, 10, current_timestamp);
-		status_id = status_id + 1;
+	WHILE id > 0 AND id < 500 LOOP
+		INSERT INTO product(sku, status_id, name, tax, price, created_at)  
+		values (10, 3, 'Dima', True, 10, current_timestamp);
+		id = id + 1;
 	END LOOP;
 END $$;
 ```
@@ -73,20 +96,21 @@ WHERE
 ```sql
 UPDATE product
 SET tax = false
-WHERE status_id < 11
+WHERE id < 11
 ```
 
 #### 7. Удалить запись из таблицы `Product`
 
 ```sql
 DELETE FROM product
-WHERE status_id = 1;
+WHERE id = 1;
 ```
 
 #### 8. Удалить 100 последних записей из таблицы `Product`
 
 ```sql
--- todo;
+DELETE FROM product
+where id>400
 ```
 
 #### 9. Удалить 1 запись из таблицы `ProductStatus`
@@ -107,41 +131,100 @@ WHERE tax = true
 #### 11. Выбрать все записи из таблицы `Product` с включением имени соответствующего статуса
 
 ```sql
--- todo;
+SELECT 
+p.sku, 
+p.status_id, 
+p.name, 
+p.tax, 
+p.price, 
+p.created_at, 
+i.name 
+FROM 
+product p 
+LEFT JOIN productstatus i ON 
+p.name = i.name;
 ```
 
 #### 12. Выбрать все записи из таблицы `Product` с включением соответствующего статуса, у которых `taxable = true`
 
 ```sql
--- todo;
+SELECT 
+p.sku, 
+p.status_id, 
+p.name, 
+p.tax, 
+p.price, 
+p.created_at, 
+i.name 
+FROM 
+product p 
+LEFT JOIN productstatus i 
+ON p.name = i.name 
+WHERE tax = true
 ```
 
 #### 13. Выбрать все записи из таблицы `ProductStatus`, у которых нет соответствия в таблице `Product`
 
 ```sql
--- todo;
+SELECT 
+i.id, 
+i.name, 
+p.status_id 
+FROM 
+productstatus i 
+LEFT JOIN product p 
+ON i.id != p.status_id
 ```
 
+<<<<<<< HEAD
+#### 14. Вывести количество записей в таблице Product для каждой записи в таблице ProductStatus. Отсортировать записи по имени статуса в порядке возрастания
+=======
 #### 14. Вывести количество записей в таблице `Product` для каждой записи в таблице `ProductStatus`. Отсортировать записи по имени статуса в порядке возрастания
+>>>>>>> 95bff3eee637199e6460bb6ebd95f4812c75a908
 
 ```sql
--- todo;
+SELECT COUNT(p.name) AS Status_Count, i.name 
+FROM productstatus i 
+LEFT JOIN product p 
+ON i.id = p.status_id 
+GROUP BY i.name 
+ORDER BY i.name ASC 
 ```
 
+<<<<<<< HEAD
+#### 15. Вывести количество записей в таблице Product, у которых taxable = true, для каждой записи в таблице ProductStatus
+=======
 #### 15. Вывести количество записей в таблице `Product`, у которых `taxable = true`, для каждой записи в таблице `ProductStatus`
+>>>>>>> 95bff3eee637199e6460bb6ebd95f4812c75a908
 
 ```sql
--- todo;
+SELECT COUNT(p.tax) AS Status_tax, 
+p.tax 
+FROM productstatus i 
+LEFT JOIN product p 
+ON i.id = p.status_id 
+WHERE tax = true 
+GROUP BY p.tax
 ```
 
 #### 16. Вывести количество записей в таблице `Product`, у которых `taxable` верно и нет
 
 ```sql
--- todo;
+SELECT COUNT( * ) 
+FROM product
+WHERE tax = true or tax = false;
 ```
 
 #### 17. Вывести количество записей в таблице `Product`, для каждой записи в таблице `ProductStatus`, у которых `taxable` верно и нет. Отсортировать записи по имени статуса.
 
 ```sql
--- todo;
+SELECT COUNT(p.tax) AS Status_tax, 
+p.tax, 
+i.name 
+FROM productstatus i 
+LEFT JOIN product p 
+ON i.id = p.status_id 
+WHERE tax = true or tax = false 
+GROUP BY i.name, p.tax 
+ORDER BY p.tax
 ```
