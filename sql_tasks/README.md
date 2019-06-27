@@ -52,20 +52,11 @@ INSERT INTO productstatus(name) VALUES ('confirmed');
 #### 3. Добавить 4 записи в таблицу `ProductStatus`
 
 ```sql
-<<<<<<< HEAD
 INSERT INTO productstatus(name) VALUES 
     ('confirmed'), 
     ('placed'), 
     ('delivered'), 
-    ('paid') 
-=======
-INSERT INTO productstatus VALUES
-    ('confirmed'),
-    ('placed'),
-    ('delivered'),
-    ('paid')
->>>>>>> 95bff3eee637199e6460bb6ebd95f4812c75a908
-;
+    ('paid');
 ```
 
 #### 4. Добавить 500 записей в таблицу `Product` (название, текст не важен)
@@ -176,11 +167,7 @@ LEFT JOIN product p
 ON i.id != p.status_id
 ```
 
-<<<<<<< HEAD
 #### 14. Вывести количество записей в таблице Product для каждой записи в таблице ProductStatus. Отсортировать записи по имени статуса в порядке возрастания
-=======
-#### 14. Вывести количество записей в таблице `Product` для каждой записи в таблице `ProductStatus`. Отсортировать записи по имени статуса в порядке возрастания
->>>>>>> 95bff3eee637199e6460bb6ebd95f4812c75a908
 
 ```sql
 SELECT COUNT(p.name) AS Status_Count, i.name 
@@ -191,11 +178,7 @@ GROUP BY i.name
 ORDER BY i.name ASC 
 ```
 
-<<<<<<< HEAD
 #### 15. Вывести количество записей в таблице Product, у которых taxable = true, для каждой записи в таблице ProductStatus
-=======
-#### 15. Вывести количество записей в таблице `Product`, у которых `taxable = true`, для каждой записи в таблице `ProductStatus`
->>>>>>> 95bff3eee637199e6460bb6ebd95f4812c75a908
 
 ```sql
 SELECT COUNT(p.tax) AS Status_tax, 
