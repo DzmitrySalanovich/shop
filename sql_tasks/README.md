@@ -79,27 +79,29 @@ END $$;
 UPDATE productstatus
 SET name = 'available'
 WHERE
-	name = 'paid';
+	id = 1;
 ```
 
 #### 6. Обновить значение `taxable` в первых 10 записях таблицы `Product`
 
 ```sql
-update product
-set tax = false 
-where id in (
-	select id 
-	from product 
-	order by id 
-	limit 10
-)
+UPDATE product
+SET tax = true
+WHERE id = any (
+	array(SELECT id 
+		  FROM product ORDER BY id 
+		  LIMIT 10));
 ```
 
 #### 7. Удалить запись из таблицы `Product`
 
 ```sql
 DELETE FROM product
-WHERE id = 1;
+WHERE id = any (array(
+	SELECT id 
+	FROM product 
+	ORDER BY id 
+	LIMIT 10));
 ```
 
 #### 8. Удалить 100 последних записей из таблицы `Product`
@@ -118,13 +120,13 @@ where id in (
 
 ```sql
 DELETE FROM productstatus
-WHERE name = 'available';
+WHERE id = 1;
 ```
 
 #### 10. Выбрать все записи из таблицы `Product`, у которых `taxable` верно
 
 ```sql
-SELECT tax
+SELECT *
 FROM product
 WHERE tax = true;
 ```
@@ -191,19 +193,19 @@ ORDER BY i.name ASC
 #### 15. Вывести количество записей в таблице Product, у которых taxable = true, для каждой записи в таблице ProductStatus
 
 ```sql
-SELECT COUNT(p.tax) AS Status_tax, 
-p.tax 
-FROM productstatus i 
-LEFT JOIN product p 
+SELECT COUNT(p.tax) AS Count_tax, 
+i.name
+FROM productstatus3 i 
+LEFT JOIN product3 p 
 ON i.id = p.status_id 
-WHERE tax = true 
-GROUP BY p.tax
+WHERE tax = true
+GROUP BY i.name
 ```
 
-#### *16. Вывести количество записей в таблице `Product`, у которых `taxable` верно и нет
+#### 16. Вывести количество записей в таблице `Product`, у которых `taxable` верно и нет
 
 ```sql
-SELECT COUNT( * ),
+SELECT COUNT( 1 ),
 		p.tax
 FROM product p
 WHERE tax = true or tax = false
